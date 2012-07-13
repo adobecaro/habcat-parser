@@ -27,7 +27,8 @@ struct HabStar {
 
     // Computed
     double ra; // Right ascension in decimal degrees
-    double de; // Declination in decimal degrees
+    double dec; // Declination in decimal degrees
+    double dist; // Distance in light years
 };
 
 class Util {
@@ -89,6 +90,9 @@ int main (int argc, char** argv) {
 
     fgets(buf, MAXLINE, in);
 
+    // Write the header to the output file
+    fprintf(out, "Hip ID,RA,Dec,Dist\n");
+
     // Read each line of the input file and process
     while (!feof(in)) {
         line.clear();
@@ -119,13 +123,20 @@ int main (int argc, char** argv) {
         star.ccdm = *i; i++;
         star.hd = static_cast<size_t>(atoi(i->c_str())); i++;
         star.bd = *i;
+        // To be calculated
+        star.ra = 0;
+        star.dec = 0;
+        star.dist = 0;
 
         // Calculations
+#if 0
         star.ra = 180 - ((star.rah * 15.0) + (star.ram / 2.0) + (star.ras / 240.0));
-        star.de = (fabs(star.ded) + (star.dem / 60.0) + (star.des / 3600.0)) * ((star.ded < 0) ? -1 : 1);
+        star.dec = (fabs(star.ded) + (star.dem / 60.0) + (star.des / 3600.0)) * ((star.ded < 0) ? -1 : 1);
+        star.dist = 3.261563777 / (star.plx / 1000.0); // in light years
+#endif
 
         // tbd
-        fprintf(out, "Hip%d,%8.5f,%8.5f\n", star.hip, star.ra, star.de);
+        fprintf(out, "Hip%d,%8.5f,%8.5f,%8.5f\n", star.hip, star.ra, star.dec, star.dist);
     }
 
     // Close files

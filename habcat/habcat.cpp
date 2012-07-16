@@ -1,5 +1,11 @@
 /* habcat.cpp */
 
+/*
+This command line utility reads the HabCat Table 4 fixed field data
+and converts the data into more usable form. The converted data
+is written to a comma separated value (CSV) file.
+*/
+
 #include <cstdio>
 #include <cmath>
 #include <string>

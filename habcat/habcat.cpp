@@ -43,28 +43,6 @@ public:
 static void ProcessCommandLine(int argc, char** argv, string& inFileName, string& outFileName) {
     // TBD
     if (argc == 1) return;
-    --argc, ++argv;
-
-    const string inCmd = "-i";
-    const string outCmd = "-o";
-
-    while (argc) {
-        if (inCmd == *argv && argc > 1) {
-            --argc, ++argv;
-            inFileName = string(*argv);
-            --argc, ++argv;
-            continue;
-        } else if (outCmd == *argv && argc > 1) {
-            --argc, ++argv;
-            outFileName = string(*argv);
-            --argc, ++argv;
-            continue;
-        } else {
-            // on unexpected argument
-            fprintf(stderr, "Usage: habcat [-i inFileName] [-o outFileName]\n");
-            return;
-        }
-    }
 }
 
 static void Split(const string& in, const string& delim, vector<string>& out) {

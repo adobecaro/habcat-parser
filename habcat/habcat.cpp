@@ -44,6 +44,12 @@ public:
 
 static void ProcessCommandLine(int argc, char** argv, string& inFileName, string& outFileName) {
     // TBD
+    if (argc == 1) return;
+    ++argc, ++argv;
+
+    // on unexpected argument
+    fprintf(stderr, "Usage: habcat [-i inFileName] [-o outFileName]\n");
+    return;
 }
 
 static void Split(const string& in, const string& delim, vector<string>& out) {

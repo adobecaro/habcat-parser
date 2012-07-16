@@ -42,6 +42,10 @@ struct HabStar {
 class Util {
 public:
 
+static void ProcessCommandLine(int argc, char** argv, string& inFileName, string& outFileName) {
+    // TBD
+}
+
 static void Split(const string& in, const string& delim, vector<string>& out) {
     string tmp;
 
@@ -76,7 +80,8 @@ int main (int argc, char** argv) {
     string outFileName = "myhabcat.csv";
     FILE* out;
 
-    // Parse command line arguments -- TBD
+    // Parse command line arguments
+    Util::ProcessCommandLine(argc, argv, inFileName, outFileName);
 
     // Open files
     in = fopen(inFileName.c_str(), "r");

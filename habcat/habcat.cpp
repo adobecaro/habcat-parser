@@ -47,9 +47,14 @@ static void ProcessCommandLine(int argc, char** argv, string& inFileName, string
 
     const string inCmd = "-i";
     const string outCmd = "-o";
+    const string helpCmd = "-h";
+    const string usage = "Usage: habcat [-i inFileName] [-o outFileName]\n";
 
     while (argc) {
-        if (inCmd == *argv && argc > 1) {
+        if (helpCmd == *argv) {
+            fprintf(stderr, usage.c_str());
+            return;
+        } else if (inCmd == *argv && argc > 1) {
             --argc, ++argv;
             inFileName = string(*argv);
             --argc, ++argv;
@@ -61,7 +66,7 @@ static void ProcessCommandLine(int argc, char** argv, string& inFileName, string
             continue;
         } else {
             // on unexpected argument
-            fprintf(stderr, "Usage: habcat [-i inFileName] [-o outFileName]\n");
+            fprintf(stderr, usage.c_str());
             return;
         }
     }

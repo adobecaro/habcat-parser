@@ -84,7 +84,7 @@ int main (int argc, char** argv) {
     }
     out = fopen(outFileName.c_str(), "w");
     if (out == NULL) {
-        fprintf(stderr, "Can't open %s for reading: %s\n", inFileName.c_str(), strerror(errno));
+        fprintf(stderr, "Can't open %s for writing: %s\n", inFileName.c_str(), strerror(errno));
         fclose(in);
         return errno;
     }

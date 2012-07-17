@@ -2,7 +2,7 @@
 
 /*
 This command line utility reads the HabCat Table 4 data that has
-been preprocessed into comma separated values (SCV) via import/export
+been preprocessed into comma separated values (CSV) via import/export
 conversion through Microsoft Excel. This program reads the input CSV
 and converts the data into an alterative form with some calculated
 or estimated values. The converted data is written to a CSV file.
@@ -178,7 +178,7 @@ int main (int argc, char** argv) {
         // more tbd
 
         // tbd
-        fprintf(out, "Hip%d,%8.5f,%8.5f,%8.5f\n", star.hip, star.ra, star.dec, star.dist);
+        fprintf(out, "Hip%d,%0.5f,%0.5f,%0.2f\n", star.hip, star.ra, star.dec, star.dist);
     }
 
     // Close files

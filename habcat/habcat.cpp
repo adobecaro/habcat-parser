@@ -8,8 +8,6 @@ and converts the data into an alterative form with some calculated
 or estimated values. The converted data is written to a CSV file.
 */
 
-/* This is the branch */
-
 #include <cstdio>
 #include <cmath>
 #include <string>

@@ -2,11 +2,13 @@
 
 /*
 This command line utility reads the HabCat Table 4 data that has
-been preprocessed into comma separated values (SCV) via import/export
+been preprocessed into comma separated values (CSV) via import/export
 conversion through Microsoft Excel. This program reads the input CSV
 and converts the data into an alterative form with some calculated
 or estimated values. The converted data is written to a CSV file.
 */
+
+/* This is the branch */
 
 #include <cstdio>
 #include <cmath>
@@ -42,6 +44,38 @@ struct HabStar {
 class Util {
 public:
 
+static void ProcessCommandLine(int argc, char** argv, string& inFileName, string& outFileName) {
+    // TBD
+    if (argc == 1) return;
+    --argc, ++argv;
+
+    const string inCmd = "-i";
+    const string outCmd = "-o";
+    const string helpCmd = "-h";
+    const string usage = "Usage: habcat [-i inFileName] [-o outFileName]\n";
+
+    while (argc) {
+        if (helpCmd == *argv) {
+            fprintf(stderr, usage.c_str());
+            return;
+        } else if (inCmd == *argv && argc > 1) {
+            --argc, ++argv;
+            inFileName = string(*argv);
+            --argc, ++argv;
+            continue;
+        } else if (outCmd == *argv && argc > 1) {
+            --argc, ++argv;
+            outFileName = string(*argv);
+            --argc, ++argv;
+            continue;
+        } else {
+            // on unexpected argument
+            fprintf(stderr, usage.c_str());
+            return;
+        }
+    }
+}
+
 static void Split(const string& in, const string& delim, vector<string>& out) {
     string tmp;
 
@@ -76,7 +110,8 @@ int main (int argc, char** argv) {
     string outFileName = "myhabcat.csv";
     FILE* out;
 
-    // Parse command line arguments -- TBD
+    // Parse command line arguments
+    Util::ProcessCommandLine(argc, argv, inFileName, outFileName);
 
     // Open files
     in = fopen(inFileName.c_str(), "r");
@@ -143,7 +178,7 @@ int main (int argc, char** argv) {
         // more tbd
 
         // tbd
-        fprintf(out, "Hip%d,%8.5f,%8.5f,%8.5f\n", star.hip, star.ra, star.dec, star.dist);
+        fprintf(out, "Hip%d,%0.5f,%0.5f,%0.2f\n", star.hip, star.ra, star.dec, star.dist);
     }
 
     // Close files

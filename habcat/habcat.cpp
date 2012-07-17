@@ -1,9 +1,11 @@
 /* habcat.cpp */
 
 /*
-This command line utility reads the HabCat Table 4 fixed field data
-and converts the data into more usable form. The converted data
-is written to a comma separated value (CSV) file.
+This command line utility reads the HabCat Table 4 data that has
+been preprocessed into comma separated values (SCV) via import/export
+conversion through Microsoft Excel. This program reads the input CSV
+and converts the data into an alterative form with some calculated
+or estimated values. The converted data is written to a CSV file.
 */
 
 #include <cstdio>
@@ -109,7 +111,7 @@ int main (int argc, char** argv) {
         HabStar star;
         vector<string> fields;
         Util::Split(line, ",\n", fields);
-        if (fields.size() == 0) {
+        if (fields.size() != 15) {
             fprintf(stderr, "Malformed line in %s\n", inFileName.c_str());
             break;
         }
@@ -135,11 +137,10 @@ int main (int argc, char** argv) {
         star.dist = 0;
 
         // Calculations
-#if 0
         star.ra = 180 - ((star.rah * 15.0) + (star.ram / 2.0) + (star.ras / 240.0));
         star.dec = (fabs(star.ded) + (star.dem / 60.0) + (star.des / 3600.0)) * ((star.ded < 0) ? -1 : 1);
         star.dist = 3.261563777 / (star.plx / 1000.0); // in light years
-#endif
+        // more tbd
 
         // tbd
         fprintf(out, "Hip%d,%8.5f,%8.5f,%8.5f\n", star.hip, star.ra, star.dec, star.dist);
